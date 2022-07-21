@@ -20,6 +20,11 @@ const routes = [
       component: () => import(/* webpackChunkName: "trade" */ '@/view/TradingHall'),
     },
     {
+      path: '/collections',
+      name: 'collections',
+      component: () => import(/* webpackChunkName: "trade" */ '@/view/Collections'),
+    },
+    {
       path: '/mint',
       name: 'mint',
       component: () => import(/* webpackChunkName: "mint" */ '@/view/mintNft'),

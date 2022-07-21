@@ -18,20 +18,20 @@
               <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且只能上传一张，重复上传会覆盖前一张图片</div>
             </el-upload>
           </el-form-item>
-          <el-form-item label="Title" class="item">
+          <el-form-item label="name" class="item">
             <el-input v-model="form.title" />
           </el-form-item>
-          <el-form-item label="Type" class="item">
+          <el-form-item label="属性" class="item">
               <el-radio-group v-model="form.type">
                 <el-radio :label="3">History</el-radio>
                 <el-radio :label="6">Person</el-radio>
               </el-radio-group>
           </el-form-item>
-          <el-form-item label="Desc" class="item">
+          <el-form-item label="介绍" class="item">
             <el-input v-model="form.desc" type="textarea" />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" >Create</el-button>
+            <el-button type="primary" class="mt-button" >铸造</el-button>
           </el-form-item>
         </el-form>
     </div>
@@ -95,6 +95,12 @@ const onSubmit = () => {
   background: #d4b728 !important;
   border-color: #d4b728 !important;
 }
-
+.mt-button {
+  padding: 2;
+  min-height: auto;
+  /* background-color: rgb(165, 118, 42); */
+  color: white;
+  background-image: linear-gradient(to right, #D444A3,#E4505F,#D74698);
+}
 
 </style>

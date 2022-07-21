@@ -13,12 +13,12 @@
   >
     <div class="flex-grow"  />
     <el-menu-item class="menu-item-font" index="1" @click="gohome">夺宝大厅</el-menu-item>
-    <el-menu-item class="menu-item-font" index="2" @click="goMintNft">交易市场</el-menu-item>
-    <el-menu-item class="menu-item-font" index="3">铸造</el-menu-item>
-     <el-menu-item  class="menu-item-font" index="4" @click="login">collections</el-menu-item>
-    <el-menu-item class="menu-item-font" index="4" @click="logout">Connet Wallet</el-menu-item>
-    <!-- <el-menu-item  class="nav" v-if="!userWalletAddress" index="4" @click="login">collections</el-menu-item>
-    <el-menu-item class="nav"  v-else index="4" @click="logout">Connet Wallet</el-menu-item> -->
+    <el-menu-item class="menu-item-font" index="2" @click="goTrade">交易市场</el-menu-item>
+    <el-menu-item class="menu-item-font" index="3" @click="goMintNft">铸造</el-menu-item>
+     <el-menu-item  class="menu-item-font" index="4" @click="goCollections">Collections</el-menu-item>
+    <!-- <el-menu-item class="menu-item-font" index="4" @click="logout">Connet Wallet</el-menu-item> -->
+    <el-menu-item  class="menu-item-font" v-if="!userWalletAddress" index="4" @click="login">Connet Wallet</el-menu-item>
+    <el-menu-item class="menu-item-font"  v-else index="4" @click="logout">Log out</el-menu-item>
   </el-menu>
   </div>
 </template>
@@ -36,11 +36,20 @@ const router = useRouter()
 
 const  goMintNft = (()=>{
    router.push({ path: '/mint' })
+   activeIndex.value = 3
+})
+
+const  goTrade = (()=>{
+   router.push({ path: '/trade' })
    activeIndex.value = 2
 })
 const  gohome = (()=>{
-   router.push({ path: '/home' })
+   router.push({ path: '/loot' })
    activeIndex.value = 1
+})
+const  goCollections = (()=>{
+   router.push({ path: '/collections' })
+   activeIndex.value = 4
 })
 //用户信息
 const flow  = getCurrentInstance().appContext.config.globalProperties
