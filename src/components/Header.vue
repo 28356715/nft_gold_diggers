@@ -1,24 +1,26 @@
 <template>
+<div class="div-relative">
   <el-menu
     :default-active="activeIndex"
-    class="el-menu-demo"
+    class="el-menu-demo div-menu "
     mode="horizontal"
     text-color="black"
     active-text-color="#3781ED"
     :ellipsis="false"
     @select="handleSelect"
-    style="font-weight:700"
+    style="font-weight:700;height: 45px;"
+    background-color="#ffffff00"
   >
-    <el-menu-item index="0">
-      <img style="margin:8%" src="../assets/img/logo.png" />
-    </el-menu-item>
-    <div class="flex-grow" />
-    <el-menu-item index="1" @click="gohome">MarketPlace</el-menu-item>
-    <el-menu-item index="2" @click="goMintNft">MintNft</el-menu-item>
-    <el-menu-item index="3">Collection</el-menu-item>
-    <el-menu-item v-if="!userWalletAddress" index="4" @click="login">login</el-menu-item>
-    <el-menu-item v-else index="4" @click="logout">logout</el-menu-item>
+    <div class="flex-grow"  />
+    <el-menu-item class="menu-item-font" index="1" @click="gohome">夺宝大厅</el-menu-item>
+    <el-menu-item class="menu-item-font" index="2" @click="goMintNft">交易市场</el-menu-item>
+    <el-menu-item class="menu-item-font" index="3">铸造</el-menu-item>
+     <el-menu-item  class="menu-item-font" index="4" @click="login">collections</el-menu-item>
+    <el-menu-item class="menu-item-font" index="4" @click="logout">Connet Wallet</el-menu-item>
+    <!-- <el-menu-item  class="nav" v-if="!userWalletAddress" index="4" @click="login">collections</el-menu-item>
+    <el-menu-item class="nav"  v-else index="4" @click="logout">Connet Wallet</el-menu-item> -->
   </el-menu>
+  </div>
 </template>
 
 <script setup>
@@ -108,4 +110,35 @@ const userinfo = ref(flow.$fcl.currentUser.subscribe(setUser))
     font-size:14px;
     font-weight:700;
  }
+ .header-backgroud{
+  background: url("../assets/img/header.png") no-repeat center center;
+  background-size: 100% 100%;
+  height: 222px;
+ }
+ .menu-item-font{
+  font-size: 18px;
+
+ }
+  .menu-item-font:hover{
+    background-image: linear-gradient(to right, #ED1E79,#522785);
+    color: #ffffff!important;
+ }
+
+ .div-relative{
+  position:relative;
+  background: url("../assets/img/header.png") no-repeat center center;
+  background-size: 100% 100%;
+  height: 222px;
+  }
+  .div-menu{ 
+    position:absolute; 
+    left: 50%;
+    top:74%;
+    color: black;
+    width: 250px;
+    /* margin-bottom: 1%; */
+  } 
+ .el-menu--horizontal{
+    border-bottom-color: #ffffff00!important;
+  }
 </style>
