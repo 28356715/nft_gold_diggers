@@ -1,0 +1,75 @@
+{
+	"emulators": {
+		"default": {
+			"port": 3569,
+			"serviceAccount": "emulator-account"  
+		}
+	},
+	"networks": {
+		"emulator": "127.0.0.1:3569",
+		"mainnet": "access.mainnet.nodes.onflow.org:9000",
+		"testnet": "access.devnet.nodes.onflow.org:9000"
+	},
+	"accounts": {
+		"emulator-account": {
+			"address": "f8d6e0586b0a20c7",
+			"key": "9b334bc88109d95edb83607016e281415df80b582d558def05e09e78ec4ad5f2"
+		},
+		"the-creator": {
+			"address": "0x01cf0e2f2f715450",
+			"key": {
+				"type":"hex",
+				"index":0,
+				"signatureAlgorithm":"ECDSA_secp256k1",
+				"hashAlgorithm":"SHA3_256",
+				"privateKey":"6b769c66af203e7f0f1c6a21931ce8a9e90bab5537850ac638c5a8853bfcd6ba"
+			}
+		},
+		"testnet-account": {
+			"address": "0x5022f111ea93d789",
+			"key": {
+				"type":"hex",
+				"index":0,
+				"signatureAlgorithm":"ECDSA_secp256k1",
+				"hashAlgorithm":"SHA3_256",
+				"privateKey":"e432553e16b5c8811cda1c67ee34f11f6f601cd1ef80e68fe1c9b25cd64dac23"
+			}
+		},
+		"testnet-dappy-account": {
+			"address": "0x5f6840176b23f23f",
+			"key": {
+				"type":"hex",
+				"index":0,
+				"signatureAlgorithm":"ECDSA_secp256k1",
+				"hashAlgorithm":"SHA3_256",
+				"privateKey":"70ee1490aebc0c894ff07c67105fb663ecdf9e49b1dbe674df4e859ba515d544"
+			}
+		},
+		"testnet-MT-account": {
+			"address": "0x2a9b2f3682e65464",
+			"key": {
+				"type":"hex",
+				"index":0,
+				"signatureAlgorithm":"ECDSA_secp256k1",
+				"hashAlgorithm":"SHA3_256",
+				"privateKey":"f53acbd19793c2d307c01ba241d8162ef3dac5eb3b68e1aace8ff07d5834fcb6"
+			}
+		}
+	},
+	"contracts":{
+		"Hello":"./cadence/contracts/hello.cdc",
+		"DappyContract": "./cadence/contracts/DappyContract.cdc",
+		"FUSD": "./cadence/contracts/FUSD.cdc",
+		"FungibleToken":"./cadence/contracts/FungibleToken.cdc",
+		"MTContract":"./cadence/contracts/MTContract.cdc"
+
+	},
+	"deployments": {
+		"testnet":{
+			"testnet-MT-account":[
+                "MTContract"
+            ]
+		}
+	}
+}
+ 
