@@ -1,0 +1,34 @@
+{
+	"emulators": {
+		"default": {
+			"port": 3569,
+			"serviceAccount": "emulator-account"
+		}
+	},
+	"contracts": {
+		"PioneerLocking":"./cadence/PioneerLocking.cdc",
+		"PioneerNFT": "./cadence/PioneerNFT.cdc",
+		"PioneerMarketplace": "./cadence/PioneerMarketplace.cdc"
+	
+	},
+	"networks": {
+		"emulator": "127.0.0.1:3569",
+		"mainnet": "access.mainnet.nodes.onflow.org:9000",
+		"testnet": "access.devnet.nodes.onflow.org:9000"
+	},
+	"accounts": {
+		"emulator-account": {
+			"address": "f8d6e0586b0a20c7",
+			"key": "b414a4285bb0a7f8d91b00399221a3dfd2e23f446c9e9ac2984331efd1d17fea"
+		},
+		"testnet-account": {
+			"address": "2a8c6391698b6e21",
+			"key": "29536e150c51bbeaf88693829e79faaf73af3f2504a59827fbe22285dbfea949"
+		}
+	},
+	"deployments": {
+		"testnet":{
+			"testnet-account":["PioneerMarketplace"]
+		}
+	}
+}
