@@ -2,8 +2,6 @@
   <section>
     <div><mtHeader /></div>
     <div style="padding: 30px 0 0 30px;">
-        <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
-            <div>
                 <el-row>
                     <el-col :span="4"><div class="grid-content ep-bg-purple" />
                       <el-card>
@@ -79,10 +77,7 @@
                             </div>
                       </el-card></el-col>
                 </el-row>
-            </div>
-        </el-tabs>
     </div>
-
   </section>
 </template>
 <script setup >

@@ -14,9 +14,14 @@ module.exports = defineConfig({
               options: {
                 appendTsSuffixTo: [/\.vue$/],    
               }    
-            }        
+            },
+              
           ]    
         }    
-      }
+      },
+      // devServer:{
+      //   disableHostCheck: true,
+        
+      // }
   
 })

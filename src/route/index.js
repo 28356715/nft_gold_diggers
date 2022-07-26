@@ -1,5 +1,5 @@
-import home from '@/view/Home'
-import loot from '@/view/Loot'
+import home from '@/view/home'
+import loot from '@/view/loot'
 
 import { createRouter,createWebHashHistory} from "vue-router";
 const routes = [
@@ -7,22 +7,22 @@ const routes = [
   {
       path: '/home',
       name: 'home',
-      component: () => import(/* webpackChunkName: "home" */ '@/view/Home'),
+      component: () => import(/* webpackChunkName: "home" */ '@/view/home'),
     },
     {
       path: '/loot',
       name: 'loot',
-      component: () => import(/* webpackChunkName: "loot" */ '@/view/Loot'),
+      component: () => import(/* webpackChunkName: "loot" */ '@/view/loot'),
     },
     {
       path: '/trade',
       name: 'trade',
-      component: () => import(/* webpackChunkName: "trade" */ '@/view/TradingHall'),
+      component: () => import(/* webpackChunkName: "trade" */ '@/view/tradingHall'),
     },
     {
       path: '/collections',
       name: 'collections',
-      component: () => import(/* webpackChunkName: "trade" */ '@/view/Collections'),
+      component: () => import(/* webpackChunkName: "trade" */ '@/view/collections'),
     },
     {
       path: '/mint',

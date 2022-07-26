@@ -38,7 +38,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup >
 import mtHeader from "../components/Header.vue"
 import { ref, toRef } from 'vue'
 import * as IPFS from 'ipfs-core'
