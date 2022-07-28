@@ -88,7 +88,7 @@ const mintNft = async ()=>{
             arg("0x7474a2d43838fd13",t.Address),
             arg("piyingxi",t.String),
             arg("this is a desc",t.String),
-            arg("",t.String),//url
+            arg("https://ipfs.io/ipfs/QmSWoRgRzjb1t76tj2owXwb1APbSWUeAfz46W8ZxvevxKV",t.String),//url
             arg("0x7474a2d43838fd13",t.Address),//创建者
             arg("20220202.22",t.UFix64),
             arg("",t.String),//externalUrl
