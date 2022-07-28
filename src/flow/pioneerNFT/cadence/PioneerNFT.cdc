@@ -327,9 +327,6 @@ pub contract PioneerNFT:NonFungibleToken{
             return <-newCollection
         }        
     }
-    pub fun createEmptyNFTMinter(): @NFTMinter{
-        return <-create NFTMinter()
-    }
 
     init() {
         self.totalSupply=0

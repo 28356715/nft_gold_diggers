@@ -19,7 +19,7 @@ transaction(recipient: Address,
         self.minterNFTID=PioneerNFT.totalSupply
 
         if account.borrow<&PioneerNFT.NFTMinter>(from: PioneerNFT.MinterStoragePath)==nil{
-            let minter <- PioneerNFT.createEmptyNFTMinter() as! @PioneerNFT.NFTMinter
+            let collection <- PioneerNFT.createEmptyNFTMinter() as! @PioneerNFT.NFTMinter
              // Put the new Collection in storage
             account.save(<-collection, to: PioneerNFT.MinterStoragePath)
 

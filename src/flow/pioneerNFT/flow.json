@@ -28,7 +28,7 @@
 	},
 	"deployments": {
 		"testnet":{
-			"testnet-account":["PioneerNFT"]
+			"testnet-account":["PioneerMarketplace"]
 		}
 	}
 }

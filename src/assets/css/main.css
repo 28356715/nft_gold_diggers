@@ -1,7 +1,9 @@
 body{
-  background-image: linear-gradient(to right, #17BF9F,#3781ED);
+  /* background-image: linear-gradient(to right, #17BF9F,#3781ED); */
+  background-color: white;
     color: black;
   }
   .container{
     margin:0px;
   }
+  li{list-style-type:none}
