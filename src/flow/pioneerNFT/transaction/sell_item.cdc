@@ -9,7 +9,7 @@ import PioneerMarketplace from "../cadence/PioneerMarketplace.cdc"
 transaction(saleItemID: UInt64, saleItemPrice: UFix64){
 
     let storefront: &PioneerMarketplace.Storefront
-    let flowReceiver: Capability<&FlowToken.Vault{FungibleToken.Receiver}>
+    let flowReceiver: Capability<&AnyResource{FungibleToken.Provider, FungibleToken.Receiver}>
     let PioneerNFTProvider: Capability<&PioneerNFT.Collection{NonFungibleToken.Provider, NonFungibleToken.CollectionPublic}>
 
     prepare(account: AuthAccount){
@@ -28,7 +28,7 @@ transaction(saleItemID: UInt64, saleItemPrice: UFix64){
 
         self.storefront= account.borrow<&PioneerMarketplace.Storefront>(from: PioneerMarketplace.StorefrontStoragePath)!
 
-        self.flowReceiver = account.getCapability<&FlowToken.Vault{FungibleToken.Receiver}>(/public/flowTokenReceiver)
+        self.flowReceiver = account.getCapability<&FlowToken.Vault{FungibleToken.Provider,FungibleToken.Receiver}>(/public/flowTokenReceiver)
         assert(self.flowReceiver.borrow() != nil, message: "Missing or mis-typed FlowToken receiver")
 
         let PioneerNFTCollectionProviderPrivatePath=/private/PioneerNFTCollection
@@ -58,8 +58,6 @@ transaction(saleItemID: UInt64, saleItemPrice: UFix64){
             itemStatus:4,
             activeID: nil
             )
-         self.storefront.updateActivityStatus(activeID:0,activeStatus:2)
-
     }
 }
 
