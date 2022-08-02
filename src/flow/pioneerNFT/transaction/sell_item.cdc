@@ -26,10 +26,9 @@ transaction(saleItemID: UInt64, saleItemPrice: UFix64){
         }
 
         self.storefront= account.borrow<&PioneerMarketplace.Storefront>(from: PioneerMarketplace.StorefrontStoragePath)!
-        self.flowReceiver=account.borrow<&AnyResource{FungibleToken.Provider,FungibleToken.Receiver}>(from :/storage/flowTokenReceiver)!
-
-       // self.flowReceiver = account.getCapability<&FlowToken.Vault{FungibleToken.Receiver}>(/public/flowTokenReceiver)
-        assert(self.flowReceiver.borrow() != nil, message: "Missing or mis-typed FlowToken receiver")
+        //self.flowReceiver=account.borrow<&AnyResource{FungibleToken.Provider,FungibleToken.Receiver}>(from :/storage/flowTokenReceiver)!
+        self.flowReceiver = account.getCapability<&AnyResource{FungibleToken.Provider,FungibleToken.Receiver}>(/public/flowTokenReceiver)
+        //assert(self.flowReceiver.borrow() != nil, message: "Missing or mis-typed FlowToken receiver")
 
         let PioneerNFTCollectionProviderPrivatePath=/private/PioneerNFTCollection
 
