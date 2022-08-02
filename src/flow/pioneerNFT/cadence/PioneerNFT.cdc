@@ -1,6 +1,11 @@
-import NonFungibleToken from 0x631e88ae7f1d7c20
-import MetadataViews from 0x631e88ae7f1d7c20
-import PioneerLocking from 0x2a8c6391698b6e21
+// import NonFungibleToken from 0x631e88ae7f1d7c20
+// import MetadataViews from 0x631e88ae7f1d7c20
+// import PioneerLocking from 0x2a8c6391698b6e21
+
+
+import NonFungibleToken from "./NonFungibleToken.cdc"
+import MetadataViews from "./MetadataViews.cdc"
+import PioneerLocking from "./PioneerLocking.cdc"
 
 pub contract PioneerNFT:NonFungibleToken{
 
@@ -237,8 +242,6 @@ pub contract PioneerNFT:NonFungibleToken{
                 self.unlock(id: id)
             }
         }
-
-       
 
         pub fun getIDs(): [UInt64] {
             return self.ownedNFTs.keys
