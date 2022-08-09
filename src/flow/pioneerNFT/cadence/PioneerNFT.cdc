@@ -65,7 +65,8 @@ pub contract PioneerNFT:NonFungibleToken{
             externalUrl: String,
             properties: {String:String}?
         ) {
-            self.id = PioneerNFT.totalSupply+1
+            self.id = PioneerNFT.totalSupply
+            
             self.description=description
             self.name=name
             self.url=url
@@ -129,7 +130,7 @@ pub contract PioneerNFT:NonFungibleToken{
         pub fun batchDeposit(tokens: @NonFungibleToken.Collection)
         pub fun getIDs(): [UInt64]
         pub fun borrowNFT(id: UInt64): &NonFungibleToken.NFT
-        pub fun borrowPioneerNFT(id: UInt64): &PioneerNFT.NFT? {
+        pub fun borrowPioneerNFT(id: UInt64): &PioneerNFTs.NFT? {
             post {
                 (result == nil) || (result?.id == id):
                     "Cannot borrow PioneerNFT reference: the ID of the returned reference is incorrect"
@@ -249,11 +250,11 @@ pub contract PioneerNFT:NonFungibleToken{
             return (&self.ownedNFTs[id] as auth &NonFungibleToken.NFT?)!
         }
  
-        pub fun borrowPioneerNFT(id: UInt64): &PioneerNFT.NFT? {
+        pub fun borrowPioneerNFT(id: UInt64): &PioneerNFTs.NFT? {
             if self.ownedNFTs[id] != nil {
                 // Create an authorized reference to allow downcasting
                 let ref = (&self.ownedNFTs[id] as auth &NonFungibleToken.NFT?)!
-                return ref as! &PioneerNFT.NFT
+                return ref as! &PioneerNFTs.NFT
             }
 
             return nil
@@ -261,7 +262,7 @@ pub contract PioneerNFT:NonFungibleToken{
      
         pub fun borrowViewResolver(id: UInt64): &AnyResource{MetadataViews.Resolver} {
             let nft = (&self.ownedNFTs[id] as auth &NonFungibleToken.NFT?)!
-            let PioneerNFT = nft as! &PioneerNFT.NFT
+            let PioneerNFT = nft as! &PioneerNFTs.NFT
             return PioneerNFT as &AnyResource{MetadataViews.Resolver}
         }
 
@@ -297,7 +298,7 @@ pub contract PioneerNFT:NonFungibleToken{
             )
 
             emit MintPioneerNFT(id: PioneerNFT.totalSupply)
-             PioneerNFT.totalSupply = PioneerNFT.totalSupply + UInt64(1)
+            PioneerNFT.totalSupply = PioneerNFT.totalSupply + UInt64(1)
             return <-newNFT
 
          }
@@ -343,7 +344,7 @@ pub contract PioneerNFT:NonFungibleToken{
         self.account.save(<-collection, to: self.CollectionStoragePath)
 
         // create a public capability for the collection
-        self.account.link<&PioneerNFT.Collection{NonFungibleToken.CollectionPublic, PioneerNFT.PioneerNFTCollectionPublic, MetadataViews.ResolverCollection}>(
+        self.account.link<&PioneerNFTs.Collection{NonFungibleToken.CollectionPublic, PioneerNFT.PioneerNFTCollectionPublic, MetadataViews.ResolverCollection}>(
             self.CollectionPublicPath,
             target: self.CollectionStoragePath
         )

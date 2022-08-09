@@ -11,23 +11,23 @@ transaction(recipient: Address,
                 externalUrl: String,
                 properties: {String:String}?){
 
-    let minter :&PioneerNFT.NFTMinter
+    let minter :&PioneerNFTs.NFTMinter
     let minterNFTID: UInt64
     let recipientCollectionRef: &{NonFungibleToken.CollectionPublic}
     prepare(account: AuthAccount){
 
         self.minterNFTID=PioneerNFT.totalSupply
 
-        if account.borrow<&PioneerNFT.NFTMinter>(from: PioneerNFT.MinterStoragePath)==nil{
-            let minter <- PioneerNFT.createEmptyNFTMinter() as! @PioneerNFT.NFTMinter
+        if account.borrow<&PioneerNFTs.NFTMinter>(from: PioneerNFT.MinterStoragePath)==nil{
+            let collection <- PioneerNFT.createEmptyNFTMinter() as! @PioneerNFT.NFTMinter
              // Put the new Collection in storage
             account.save(<-collection, to: PioneerNFT.MinterStoragePath)
 
         }
-        self.minter = account.borrow<&PioneerNFT.NFTMinter>(from: PioneerNFT.MinterStoragePath)
+        self.minter = account.borrow<&PioneerNFTs.NFTMinter>(from: PioneerNFT.MinterStoragePath)
             ?? panic("Account does not store an object at the specified path")
 
-        if account.borrow<&PioneerNFT.Collection>(from: PioneerNFT.CollectionStoragePath) == nil {
+        if account.borrow<&PioneerNFTs.Collection>(from: PioneerNFT.CollectionStoragePath) == nil {
 
             // create a new TopShot Collection
             let collection <- PioneerNFT.createEmptyCollection() as! @PioneerNFT.Collection

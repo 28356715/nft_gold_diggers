@@ -9,8 +9,8 @@ import PioneerMarketplace from "../cadence/PioneerMarketplace.cdc"
 transaction(saleItemID: UInt64, saleItemPrice: UFix64){
 
     let storefront: &PioneerMarketplace.Storefront
-    let flowReceiver: Capability<&FlowToken.Vault{FungibleToken.Receiver}>
-    let PioneerNFTProvider: Capability<&PioneerNFT.Collection{NonFungibleToken.Provider, NonFungibleToken.CollectionPublic}>
+    let flowReceiver: Capability<&AnyResource{FungibleToken.Provider, FungibleToken.Receiver}>
+    let PioneerNFTProvider: Capability<&PioneerNFTs.Collection{NonFungibleToken.Provider, NonFungibleToken.CollectionPublic}>
 
     prepare(account: AuthAccount){
 
@@ -28,17 +28,17 @@ transaction(saleItemID: UInt64, saleItemPrice: UFix64){
 
         self.storefront= account.borrow<&PioneerMarketplace.Storefront>(from: PioneerMarketplace.StorefrontStoragePath)!
 
-        self.flowReceiver = account.getCapability<&FlowToken.Vault{FungibleToken.Receiver}>(/public/flowTokenReceiver)
+        self.flowReceiver = account.getCapability<&FlowToken.Vault{FungibleToken.Provider,FungibleToken.Receiver}>(/public/flowTokenReceiver)
         assert(self.flowReceiver.borrow() != nil, message: "Missing or mis-typed FlowToken receiver")
 
         let PioneerNFTCollectionProviderPrivatePath=/private/PioneerNFTCollection
 
 
-        if !account.getCapability<&PioneerNFT.Collection{NonFungibleToken.Provider, NonFungibleToken.CollectionPublic}>(PioneerNFTCollectionProviderPrivatePath)!.check() {
-            account.link<&PioneerNFT.Collection{NonFungibleToken.Provider, NonFungibleToken.CollectionPublic}>(PioneerNFTCollectionProviderPrivatePath, target: PioneerNFT.CollectionStoragePath)
+        if !account.getCapability<&PioneerNFTs.Collection{NonFungibleToken.Provider, NonFungibleToken.CollectionPublic}>(PioneerNFTCollectionProviderPrivatePath)!.check() {
+            account.link<&PioneerNFTs.Collection{NonFungibleToken.Provider, NonFungibleToken.CollectionPublic}>(PioneerNFTCollectionProviderPrivatePath, target: PioneerNFT.CollectionStoragePath)
         }
 
-        self.PioneerNFTProvider = account.getCapability<&PioneerNFT.Collection{NonFungibleToken.Provider, NonFungibleToken.CollectionPublic}>(PioneerNFTCollectionProviderPrivatePath)!
+        self.PioneerNFTProvider = account.getCapability<&PioneerNFTs.Collection{NonFungibleToken.Provider, NonFungibleToken.CollectionPublic}>(PioneerNFTCollectionProviderPrivatePath)!
         assert(self.PioneerNFTProvider.borrow() != nil, message: "Missing or mis-typed PioneerNFT.Collection provider")
     }
 
@@ -58,8 +58,6 @@ transaction(saleItemID: UInt64, saleItemPrice: UFix64){
             itemStatus:4,
             activeID: nil
             )
-         self.storefront.updateActivityStatus(activeID:0,activeStatus:2)
-
     }
 }
 

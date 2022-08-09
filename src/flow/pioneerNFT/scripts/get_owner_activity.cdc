@@ -5,6 +5,7 @@ import PioneerMarketplace from "../cadence/PioneerMarketplace.cdc"
 //getListingIDs
 
 
+
 pub struct ActivityDetail{
     pub let owner:Address
     pub let Donor:{Address:UFix64}
@@ -31,11 +32,14 @@ pub fun main(account: Address): [UInt64] {
     var res:[PioneerMarketplace.ListingDetails]=[]
     var resid:[UInt64]=[]
 
-    while i<ids.length {
+  while i<ids.length {
        let publicdetails= collectionRef.borrowListing(listingResourceID:ids[i])!
        let arr= publicdetails.getDetails()
-       resid.append(arr.activeID)
-       res.append(arr)
+        if arr!=nil{
+         resid.append(arr.activeID!)
+         res.append(arr)
+       }
+       i=i+1
     }
 
     return resid

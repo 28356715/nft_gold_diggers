@@ -15,42 +15,57 @@
               :limit="1"
               list-type="picture">
               <el-button size="small" type="primary">点击上传</el-button>
-              <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且只能上传一张，重复上传会覆盖前一张图片</div>
+              <div  class="el-upload__tip">只能上传jpg/png文件，且只能上传一张，重复上传会覆盖前一张图片</div>
             </el-upload>
           </el-form-item>
-          <el-form-item label="Title" class="item">
-            <el-input v-model="form.title" />
+          <el-form-item label="name" class="item">
+            <el-input v-model="form.name" />
           </el-form-item>
-          <el-form-item label="Type" class="item">
-              <el-radio-group v-model="form.type">
-                <el-radio :label="3">History</el-radio>
-                <el-radio :label="6">Person</el-radio>
+          <el-form-item label="属性" class="item">
+              <el-radio-group v-model="form.properties">
+              <el-radio 
+              v-for="item in propertiesList"
+              :key="item.key"
+              :label="item.key">{{item.value}}</el-radio>
               </el-radio-group>
           </el-form-item>
-          <el-form-item label="Desc" class="item">
+          <el-form-item label="介绍" class="item">
             <el-input v-model="form.desc" type="textarea" />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" >Create</el-button>
+            <el-button type="primary" class="mt-button" @click="mintNft">铸造</el-button>
           </el-form-item>
         </el-form>
     </div>
   </div>
 </template>
 
-<script setup>
-import mtHeader from "../components/Header.vue"
-import { ref, toRef } from 'vue'
+<script setup lang="ts" >
+import mtHeader from "../components/PageHeader.vue"
+import { MINT_NFT } from "../flow/transaction/mint_nft.tx"
+import { ref, toRef,reactive } from 'vue'
 import * as IPFS from 'ipfs-core'
+import { getCurrentInstance } from 'vue'
+import { Action, ElMessage, ElMessageBox } from 'element-plus'
 
+interface properties {
+  key:string;
+  value:string;
+}
+
+
+
+const golbal  = getCurrentInstance()!.appContext.config.globalProperties
 const fileList = ref([]);
+const propertiesList:Array<properties> = reactive([{key:"01",value:"Art"},{key:"02",value:"Music"},{key:"03",value:"Video"},{key:"04",value:"Virtual Worlds"}])
+
 // const file = {}
-const form = ref({
-  title: '',
-  type: 3,
-  resource: '',
+const form = reactive({
+  name: '',
   desc: '',
   url:'',
+  externalUrl:'',
+  properties:'01'
 })
 
 const handleRemove = (file, fileList)=>{
@@ -74,6 +89,68 @@ const onSubmit = () => {
   console.log('submit!')
 }
 
+const mintNft = async ()=>{
+   try{
+      let addr = JSON.parse(window.sessionStorage.getItem("CURRENT_USER")!).addr
+      console.log("addr======"+addr)
+        let name = form.name
+        let desc = form.desc
+        let now = Date.parse(new Date().toString())/1000+'.0'
+        console.log(new Date())
+                
+
+        const property = propertiesList.find( e => {
+          e.key == form.properties
+          return e
+        })
+        if (addr==null) {
+          ElMessageBox.alert('先链接钱包~', {
+            confirmButtonText: 'OK',
+            type:'error',
+          })
+          return 
+        }
+
+         if (name=="") {
+          ElMessageBox.alert('name不能为空~', {
+
+            confirmButtonText: 'OK',
+            type:'error',
+          })
+          return 
+        }
+           if (desc=="") {
+          ElMessageBox.alert('desc不能为空~', {
+
+            confirmButtonText: 'OK',
+            type:'error',
+          })
+          return 
+        }
+        console.log("now==="+now)
+
+        let res=await golbal.$fcl.mutate({
+          cadence:MINT_NFT,
+          args:(arg,t)=>[
+            arg(addr,t.Address),//ecipient: Address,
+            arg(name,t.String),//name: String
+            arg(desc,t.String),//escription: String
+            arg("https://ipfs.io/ipfs/QmSWoRgRzjb1t76tj2owXwb1APbSWUeAfz46W8ZxvevxKV",t.String),//url.String,
+            arg(addr,t.Address),//creator: Address,
+            arg(now,t.UFix64),//createTime: UFix64,
+            arg("",t.String),//externalUrl
+            arg(property,t.Dictionary({ key: t.String, value: t.String })),//properties: {String:String}?)
+          ],
+        })
+        await golbal.$fcl.tx(res).onceSealed()
+        console.log("res======="+res)
+        // await getFUSDBalance();
+        // await addDappy(templateID);
+      }catch(err){
+        console.log("err========="+err)
+      }
+}
+
 
 </script>
 <style>
@@ -95,6 +172,12 @@ const onSubmit = () => {
   background: #d4b728 !important;
   border-color: #d4b728 !important;
 }
-
+.mt-button {
+  padding: 2;
+  min-height: auto;
+  /* background-color: rgb(165, 118, 42); */
+  color: white;
+  background-image: linear-gradient(to right, #D444A3,#E4505F,#D74698);
+}
 
 </style>

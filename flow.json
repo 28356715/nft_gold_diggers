@@ -57,17 +57,16 @@
 		}
 	},
 	"contracts":{
-		"Hello":"./cadence/contracts/hello.cdc",
-		"DappyContract": "./cadence/contracts/DappyContract.cdc",
-		"FUSD": "./cadence/contracts/FUSD.cdc",
-		"FungibleToken":"./cadence/contracts/FungibleToken.cdc",
-		"MTContract":"./cadence/contracts/MTContract.cdc"
-
+		"MTContract":"./cadence/contracts/MTContract.cdc",
+		"PioneerLocking":"./cadence/PioneerLocking.cdc",
+		"PioneerNFT": "./cadence/PioneerNFT.cdc",
+		"PioneerNFTs": "./cadence/PioneerNFTs.cdc",
+		"PioneerMarketplace": "./cadence/PioneerMarketplace.cdc"
 	},
 	"deployments": {
 		"testnet":{
 			"testnet-MT-account":[
-                "MTContract"
+                "PioneerNFTs"
             ]
 		}
 	}
